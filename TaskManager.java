@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskManager {
-    private List<Task> tasks = new ArrayList<>();
+    private final List<Task> tasks = new ArrayList<>();
 
     public void addTask(String description) {
         Task newTask = new Task(description);
@@ -14,21 +14,35 @@ public class TaskManager {
     }
 
     public void listTasks() {
-        for (Task t : tasks) {
-            System.out.println(t);
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks found.");
+            return;
+        }
+
+        for (Task task : tasks) {
+            System.out.println(task);
         }
     }
 
     public void completeTask(int id) {
-        for (Task t : tasks) {
-            if (id == t.getId()) {
-                t.markComplete();
+        for (Task task : tasks) {
+            if (task.getId() == id) {
+                task.markComplete();
+                System.out.println("Task #" + id + " completed.");
+                return;
             }
         }
+
+        System.out.println("Task #" + id + " was not found.");
     }
 
     public void deleteTask(int id) {
-        tasks.removeIf(t -> t.getId() == id);
-    }
+        boolean removed = tasks.removeIf(task -> task.getId() == id);
 
+        if (removed) {
+            System.out.println("Task #" + id + " deleted.");
+        } else {
+            System.out.println("Task #" + id + " was not found.");
+        }
+    }
 }

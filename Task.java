@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Task {
     private static int nextId = 1;
     private final int id;
